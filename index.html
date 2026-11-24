@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ziekenhuisverplaatste zorg – test je kennis</title>
+<meta name="description" content="Korte quiz en de lijst met handelingen die thuis kunnen, bij de uitlegvideo over ziekenhuisverplaatste zorg (Frisius MC en Thuiszorg Het Friese Land).">
+<style>
+  :root {
+    --bg: #f3f8f7; --ink: #10302f; --teal: #0b5f5c; --mint: #def0ec; --mintB: #7fb3ab;
+    --orF: #fdeedb; --or: #b85c00; --red: #b3361e; --card: #ffffff; --muted: #5f7774;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.5 Inter, "Segoe UI", Roboto, Arial, sans-serif; }
+  header { background: var(--teal); color: #fff; padding: 20px 16px 0; }
+  header .wrap { max-width: 760px; margin: 0 auto; }
+  header h1 { margin: 0 0 4px; font-size: 1.35rem; }
+  header p { margin: 0 0 14px; opacity: .9; font-size: .95rem; }
+  nav { display: flex; gap: 6px; }
+  nav button { flex: 1; border: 0; border-radius: 12px 12px 0 0; padding: 12px 8px; font: inherit; font-weight: 600; cursor: pointer; background: #0a4f4c; color: #fff; }
+  nav button[aria-selected="true"] { background: var(--bg); color: var(--teal); }
+  main { max-width: 760px; margin: 0 auto; padding: 20px 16px 48px; }
+  .card { background: var(--card); border: 2px solid var(--mintB); border-radius: 18px; padding: 20px; margin-bottom: 16px; }
+  .q-count { color: var(--muted); font-size: .9rem; margin: 0 0 6px; }
+  .q-text { font-size: 1.15rem; font-weight: 700; margin: 0 0 14px; }
+  .opts { display: grid; gap: 10px; }
+  .opt { text-align: left; border: 2px solid var(--mintB); background: #fff; border-radius: 12px; padding: 12px 14px; font: inherit; cursor: pointer; color: var(--ink); }
+  .opt:hover:not([disabled]) { border-color: var(--teal); }
+  .opt.good { background: var(--mint); border-color: var(--teal); font-weight: 600; }
+  .opt.bad { background: #fbe9e5; border-color: var(--red); }
+  .opt[disabled] { cursor: default; }
+  .uitleg { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: var(--bg); }
+  .btn { display: inline-block; margin-top: 16px; border: 0; background: var(--teal); color: #fff; padding: 12px 20px; border-radius: 999px; font: inherit; font-weight: 600; cursor: pointer; }
+  .score { font-size: 2.2rem; font-weight: 700; color: var(--teal); margin: 4px 0; }
+  .note { color: var(--muted); font-size: .9rem; }
+  .search { width: 100%; padding: 12px 14px; border-radius: 12px; border: 2px solid var(--mintB); font: inherit; margin-bottom: 14px; background: #fff; }
+  .afd h2 { margin: 0 0 10px; font-size: 1.1rem; color: var(--teal); }
+  .hand { border-top: 1px solid var(--mint); padding: 10px 0; }
+  .hand:first-of-type { border-top: 0; }
+  .hand b { display: block; }
+  .tag { display: inline-block; font-size: .8rem; padding: 2px 8px; border-radius: 999px; background: var(--orF); color: var(--or); margin-left: 6px; }
+  .placeholder { border-style: dashed; color: var(--muted); }
+  footer { max-width: 760px; margin: 0 auto; padding: 0 16px 32px; color: var(--muted); font-size: .9rem; }
+  .vraag { background: var(--mint); border: 0; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Van het ziekenhuisbed naar je eigen bed</h1>
+    <p>Ziekenhuisverplaatste zorg · Frisius MC en Thuiszorg Het Friese Land</p>
+    <nav role="tablist">
+      <button role="tab" id="tab-quiz" aria-selected="true" aria-controls="quiz">Test je kennis</button>
+      <button role="tab" id="tab-lijst" aria-selected="false" aria-controls="lijst">Handelingen per afdeling</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- QUIZ -->
+  <section id="quiz" role="tabpanel" aria-labelledby="tab-quiz">
+    <div class="card" id="quizCard"></div>
+    <p class="note">Je antwoorden worden niet opgeslagen. Er is geen inlog nodig.</p>
+  </section>
+
+  <!-- HANDELINGENLIJST -->
+  <section id="lijst" role="tabpanel" aria-labelledby="tab-lijst" hidden>
+    <input class="search" id="zoek" type="search" placeholder="Zoek een handeling of afdeling…" aria-label="Zoek een handeling of afdeling">
+    <div id="lijstInhoud"></div>
+  </section>
+
+  <div class="card vraag"><b>Vragen?</b> Stel ze gerust aan je teamleider.</div>
+</main>
+
+<footer>
+  Gemaakt door Remmelt Haarsma en Nils van der Wal (Technische Bedrijfskunde, NHL Stenden), in opdracht van Frisius MC, samen met Thuiszorg Het Friese Land.
+</footer>
+
+<script>
+// ---------------- QUIZ ----------------
+// Vragen sluiten aan op wat in de video wordt verteld. Pas tekst gerust aan.
+const VRAGEN = [
+  { v: 'Wat is ziekenhuisverplaatste zorg?',
+    o: ['Zorg die normaal in het ziekenhuis gebeurt, maar thuis wordt gegeven', 'Zorg die de huisarts overneemt', 'Een patiënt die naar een andere afdeling gaat'], g: 0,
+    u: 'Bij ziekenhuisverplaatste zorg krijgt de patiënt een behandeling die normaal in het ziekenhuis gebeurt, bij hem thuis.' },
+  { v: 'Welke behandeling kreeg meneer Jansen in de video uiteindelijk thuis?',
+    o: ['Fysiotherapie', 'Antibiotica via een infuus', 'Wondverzorging'], g: 1,
+    u: 'Na een paar dagen had meneer Jansen alleen nog antibiotica via het infuus nodig. Dat kan ook thuis.' },
+  { v: 'Wie ziet vaak als eerste dat een patiënt mogelijk thuis verder behandeld kan worden?',
+    o: ['De thuiszorg', 'De verpleegkundige op de afdeling', 'Het transferpunt'], g: 1,
+    u: 'Het begint op de afdeling: de verpleegkundige kent de patiënt en ziet het als eerste.' },
+  { v: 'Op welk moment maakt de afdeling een consult aan bij het transferpunt?',
+    o: ['Bij de opname', 'Bij het vastleggen van de ontslagdatum', 'Na het ontslag'], g: 1,
+    u: 'Bij het vastleggen van de ontslagdatum maakt de afdeling een consult aan bij het transferpunt.' },
+  { v: 'Wat doet het transferpunt?',
+    o: ['Het geeft de behandeling thuis', 'Het zoekt contact met de thuiszorg en zorgt dat de thuissituatie goed is geregeld', 'Het bepaalt de ontslagdatum'], g: 1,
+    u: 'Het transferpunt zoekt contact met Thuiszorg Het Friese Land en zorgt dat de thuissituatie goed is geregeld.' },
+  { v: 'Wat doet het beslisondersteunend model (in ontwikkeling)?',
+    o: ['Het beslist zelf over ontslag', 'Het geeft de verpleegkundige een signaal: deze patiënt kan mogelijk thuis verder', 'Het plant de bedden van de afdeling'], g: 1,
+    u: 'Het model geeft op het juiste moment een signaal. De verpleegkundige en de arts beslissen samen.' },
+  { v: 'Wie verzorgt meneer Jansen thuis?',
+    o: ['De wijkverpleegkundige van Thuiszorg Het Friese Land', 'Een verpleegkundige van de afdeling', 'Zijn familie'], g: 0,
+    u: 'De wijkverpleegkundige van Thuiszorg Het Friese Land komt langs en verzorgt de antibiotica via de infuuslijn.' },
+  { v: 'Wat levert ziekenhuisverplaatste zorg op?',
+    o: ['Minder verkeerde beddagen', 'Ruimte voor nieuwe patiënten', 'De thuiszorg wordt beter benut', 'Alle drie'], g: 3,
+    u: 'Alle drie: minder verkeerde beddagen, ruimte voor nieuwe patiënten en de thuiszorg wordt beter benut.' },
+];
+let nr = 0, goed = 0;
+const qc = document.getElementById('quizCard');
+function toonVraag() {
+  const q = VRAGEN[nr];
+  qc.innerHTML = `<p class="q-count">Vraag ${nr + 1} van ${VRAGEN.length}</p><p class="q-text"></p><div class="opts"></div>`;
+  qc.querySelector('.q-text').textContent = q.v;
+  const box = qc.querySelector('.opts');
+  q.o.forEach((t, i) => {
+    const b = document.createElement('button'); b.className = 'opt'; b.textContent = t;
+    b.onclick = () => kies(i, b); box.appendChild(b);
+  });
+}
+function kies(i, knop) {
+  const q = VRAGEN[nr]; const knoppen = qc.querySelectorAll('.opt');
+  knoppen.forEach((b, j) => { b.disabled = true; if (j === q.g) b.classList.add('good'); });
+  if (i === q.g) goed++; else knop.classList.add('bad');
+  const u = document.createElement('div'); u.className = 'uitleg';
+  u.textContent = (i === q.g ? 'Goed! ' : 'Net niet. ') + q.u; qc.appendChild(u);
+  const v = document.createElement('button'); v.className = 'btn';
+  v.textContent = nr < VRAGEN.length - 1 ? 'Volgende vraag' : 'Bekijk je score';
+  v.onclick = () => { nr++; nr < VRAGEN.length ? toonVraag() : einde(); }; qc.appendChild(v); v.focus();
+}
+function einde() {
+  const tekst = goed === VRAGEN.length ? 'Alles goed, top!' : goed >= VRAGEN.length - 2 ? 'Heel goed gedaan!' : 'Goed geprobeerd! Kijk de video gerust nog eens.';
+  qc.innerHTML = `<p class="q-count">Klaar</p><p class="score">${goed} / ${VRAGEN.length}</p><p>${tekst}</p><button class="btn" id="opnieuw">Opnieuw</button>`;
+  document.getElementById('opnieuw').onclick = () => { nr = 0; goed = 0; toonVraag(); };
+}
+toonVraag();
+
+// ---------------- HANDELINGENLIJST ----------------
+// NOG AAN TE VULLEN met de handelingenlijst die met Thuiszorg Het Friese Land is getoetst.
+// Per afdeling: naam, en per handeling een naam, korte toelichting en eventueel voorwaarden.
+const HANDELINGEN = [
+  // { afdeling: 'Naam afdeling', items: [ { naam: 'Antibiotica via infuus', toelichting: '…', voorwaarden: '…' } ] },
+];
+const lijst = document.getElementById('lijstInhoud');
+function toonLijst(filter = '') {
+  const f = filter.trim().toLowerCase();
+  lijst.innerHTML = '';
+  if (!HANDELINGEN.length) {
+    lijst.innerHTML = '<div class="card placeholder">De lijst met handelingen per afdeling wordt hier binnenkort geplaatst.</div>';
+    return;
+  }
+  let gevonden = 0;
+  for (const afd of HANDELINGEN) {
+    const items = afd.items.filter(h => !f || (afd.afdeling + ' ' + h.naam + ' ' + (h.toelichting || '')).toLowerCase().includes(f));
+    if (!items.length) continue;
+    gevonden += items.length;
+    const c = document.createElement('div'); c.className = 'card afd';
+    const h2 = document.createElement('h2'); h2.textContent = afd.afdeling; c.appendChild(h2);
+    for (const h of items) {
+      const d = document.createElement('div'); d.className = 'hand';
+      const b = document.createElement('b'); b.textContent = h.naam; d.appendChild(b);
+      if (h.toelichting) d.appendChild(document.createTextNode(h.toelichting));
+      if (h.voorwaarden) { const s = document.createElement('div'); s.className = 'note'; s.textContent = 'Voorwaarden: ' + h.voorwaarden; d.appendChild(s); }
+      c.appendChild(d);
+    }
+    lijst.appendChild(c);
+  }
+  if (!gevonden) lijst.innerHTML = '<div class="card placeholder">Geen handelingen gevonden.</div>';
+}
+document.getElementById('zoek').addEventListener('input', e => toonLijst(e.target.value));
+toonLijst();
+
+// ---------------- TABBLADEN ----------------
+const tabs = [['tab-quiz', 'quiz'], ['tab-lijst', 'lijst']];
+function open(id) {
+  for (const [t, p] of tabs) { const on = t === id; document.getElementById(t).setAttribute('aria-selected', on); document.getElementById(p).hidden = !on; }
+}
+tabs.forEach(([t]) => document.getElementById(t).addEventListener('click', () => open(t)));
+if (location.hash === '#lijst') open('tab-lijst');
+</script>
+</body>
+</html>
