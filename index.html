@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ziekenhuisverplaatste zorg – kennis en zakkaart</title>
+<title>ZVZ-wijzer – ziekenhuisverplaatste zorg</title>
 <meta name="description" content="Video, quiz, zakkaart en de lijst met technische handelingen per afdeling, bij de uitlegvideo over ziekenhuisverplaatste zorg (Frisius MC en Thuiszorg Het Friese Land).">
 <style>
   :root {
@@ -19,8 +19,8 @@
   header .wrap { max-width: 820px; margin: 0 auto; }
   header h1 { margin: 0 0 2px; font-size: 1.25rem; line-height: 1.3; }
   header p { margin: 0 0 12px; opacity: .9; font-size: .9rem; }
-  nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-  nav button { border: 0; border-radius: 12px 12px 0 0; padding: 10px 4px 9px; font: inherit; font-size: .92rem; font-weight: 600; cursor: pointer; background: var(--teal2); color: #fff; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  nav { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+  nav button { border: 0; border-radius: 12px 12px 0 0; padding: 10px 2px 9px; font: inherit; font-size: .8rem; font-weight: 600; cursor: pointer; background: var(--teal2); color: #fff; display: flex; flex-direction: column; align-items: center; gap: 2px; }
   nav button svg { width: 22px; height: 22px; }
   nav button[aria-selected="true"] { background: var(--bg); color: var(--teal); }
   main { max-width: 820px; margin: 0 auto; padding: 20px 16px 40px; }
@@ -87,9 +87,51 @@
   mark { background: #ffe7a8; padding: 0 2px; border-radius: 3px; }
   .leeg { text-align: center; color: var(--muted); padding: 26px 10px; }
   .legenda { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 14px; }
+  /* start */
+  .tegels { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .tegel { text-align: left; border: 2px solid var(--mintB); background: #fff; border-radius: 18px; padding: 16px; font: inherit; color: var(--ink); cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
+  .tegel:hover { border-color: var(--teal); }
+  .tegel b { font-size: 1.05rem; }
+  .tegel span:last-child { color: var(--muted); font-size: .9rem; line-height: 1.35; }
+  .t-ic { width: 42px; height: 42px; border-radius: 12px; background: var(--mint); color: var(--teal); display: grid; place-items: center; margin-bottom: 4px; }
+  .t-ic svg { width: 24px; height: 24px; }
+  ul.tips { margin: 0; padding-left: 20px; } ul.tips li { margin: 4px 0; }
+  @media (max-width: 420px) { .tegels { grid-template-columns: 1fr; } }
+  /* beslisboom */
+  .r { display: inline-block; font-size: .75rem; font-weight: 700; color: #1f5fbf; background: #e6efff; border: 1.5px solid #8fb2ef; border-radius: 999px; padding: 1px 8px; margin-right: 6px; vertical-align: middle; }
+  .schakel { display: inline-flex; background: var(--grey); border-radius: 999px; padding: 4px; margin: 4px 0 14px; }
+  .schakel button { border: 0; background: transparent; padding: 8px 16px; border-radius: 999px; font: inherit; font-weight: 600; color: var(--muted); cursor: pointer; }
+  .schakel button.actief { background: #fff; color: var(--teal); box-shadow: 0 1px 4px rgba(16,48,47,.12); }
+  .spoor { list-style: none; margin: 0 0 12px; padding: 0; }
+  .spoor li { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--mintB); font-size: .9rem; color: var(--muted); }
+  .spoor b { white-space: nowrap; } .a-ja { color: var(--teal); } .a-nee { color: var(--or); }
+  .vraagkaart { border: 2px solid #1f6fc0; border-radius: 16px; padding: 16px; background: #f5f9ff; }
+  .vraagkaart h3, .uitkomst h3 { margin: 8px 0 6px; font-size: 1.12rem; }
+  .vraagkaart ul { margin: 0 0 6px; padding-left: 20px; }
+  .jn { display: flex; gap: 10px; flex-wrap: wrap; } .jn .btn { min-width: 110px; justify-content: center; }
+  .uitkomst { border: 2px dashed var(--grey); border-radius: 16px; padding: 16px; background: #fafcfc; }
+  .uitkomst.u-go { border: 2.5px solid var(--teal); background: var(--mint); }
+  .uitkomst p { margin: 0; }
+  .nav2 { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  #boom { margin-bottom: 8px; }
+  .b-rij { display: grid; grid-template-columns: 1fr 120px; gap: 10px; align-items: center; }
+  .b-vraag, .b-stap, .b-opt { border: 2px solid #1f6fc0; border-radius: 12px; padding: 10px 12px; text-align: center; background: #fff; font-size: .95rem; }
+  .b-vraag { border-radius: 26px; background: #f5f9ff; }
+  .b-actie { background: var(--mint); border-color: var(--teal); border-width: 3px; }
+  .b-opt { border: 2px dashed #b9c6c5; color: var(--muted); }
+  .b-nee { border: 2px dashed #b9c6c5; border-radius: 12px; padding: 8px; font-size: .82rem; color: var(--muted); text-align: center; position: relative; }
+  .b-nee i { display: block; font-style: normal; font-weight: 700; color: var(--or); font-size: .75rem; }
+  .b-ja, .b-pijl { width: calc(100% - 130px); text-align: center; color: var(--muted); font-size: .8rem; line-height: 1; padding: 4px 0; }
+  .b-ja::before, .b-pijl::before { content: "↓"; display: block; font-size: 1.1rem; color: #8a9a98; }
+  .b-vangnet { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--grey); font-size: .9rem; color: var(--muted); }
+  .regel { border-top: 1px solid var(--grey); padding: 10px 0; }
+  .regel .rk { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
+  .regel .rk small { margin-left: auto; color: var(--muted); font-size: .78rem; }
+  .regel .ra { font-size: .93rem; padding-left: 4px; }
+  .regel .ra span { display: inline-block; width: 42px; font-weight: 700; color: var(--teal); font-size: .8rem; text-transform: uppercase; }
   footer { max-width: 820px; margin: 0 auto; padding: 0 16px 32px; color: var(--muted); font-size: .88rem; }
   @media print {
-    header, nav, footer, .noprint, section:not(#zakkaart) { display: none !important; }
+    header, nav, footer, .noprint, section:not(#zakkaart), #zakkaart .card:not(:first-child) { display: none !important; }
     body { background: #fff; }
     section#zakkaart { display: block !important; }
     .card { border: 1px solid #999; }
@@ -99,18 +141,42 @@
 <body>
 <header>
   <div class="wrap">
-    <h1>Van het ziekenhuisbed naar je eigen bed</h1>
-    <p>Ziekenhuisverplaatste zorg · Frisius MC en Thuiszorg Het Friese Land</p>
+    <h1>ZVZ-wijzer</h1>
+    <p>Alles over ziekenhuisverplaatste zorg op één plek · Frisius MC en Thuiszorg Het Friese Land</p>
     <nav role="tablist" aria-label="Onderdelen">
-      <button role="tab" id="tab-video" aria-controls="video" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor"/></svg>Video</button>
-      <button role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>Quiz</button>
-      <button role="tab" id="tab-zakkaart" aria-controls="zakkaart" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Zakkaart</button>
+      <button role="tab" id="tab-start" aria-controls="start" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>Start</button>
+      <button role="tab" id="tab-zakkaart" aria-controls="zakkaart" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 11 12 19 4 11z"/><path d="M12 19v2"/></svg>Beslisboom</button>
       <button role="tab" id="tab-handelingen" aria-controls="handelingen" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Handelingen</button>
+      <button role="tab" id="tab-video" aria-controls="video" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor"/></svg>Video</button>
+      <button role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>Quiz</button>
     </nav>
   </div>
 </header>
 
 <main>
+  <!-- START -->
+  <section id="start" role="tabpanel" aria-labelledby="tab-start">
+    <div class="card">
+      <h2>Wat is ZVZ?</h2>
+      <p style="margin:0">Ziekenhuisverplaatste zorg: technische zorg die de thuiszorg (zoals Thuiszorg Het Friese Land) thuis overneemt. Zo kan de patiënt eerder naar huis en herstellen in de eigen omgeving.</p>
+    </div>
+    <div class="tegels">
+      <button class="tegel" data-naar="zakkaart"><span class="t-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3 20 11 12 19 4 11z"/></svg></span><b>Beslisboom</b><span>Kan deze patiënt naar huis met technische thuiszorg? Doorloop de zakkaart.</span></button>
+      <button class="tegel" data-naar="handelingen"><span class="t-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span><b>Handelingen</b><span>Welke technische handelingen per afdeling (U en Z)?</span></button>
+      <button class="tegel" data-naar="video"><span class="t-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor"/></svg></span><b>Uitlegvideo</b><span>In 2 minuten: van ziekenhuisbed naar eigen bed.</span></button>
+      <button class="tegel" data-naar="quiz"><span class="t-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14"/></svg></span><b>Test je kennis</b><span>Korte quiz van 8 vragen.</span></button>
+    </div>
+    <div class="card">
+      <h2>Tips</h2>
+      <ul class="tips">
+        <li>Noteer bij opname de beoogde ontslagdatum en de thuissituatie (bijvoorbeeld een trap).</li>
+        <li>Schuift de ontslagdatum? Pas hem aan in EPIC.</li>
+        <li>Ook ADL-zorg nodig? Zet dit in het consult.</li>
+        <li>Vraag het consult nooit pas op de ontslagdag.</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- VIDEO -->
   <section id="video" role="tabpanel" aria-labelledby="tab-video" hidden>
     <div class="card">
@@ -128,52 +194,57 @@
   </section>
 
   <!-- QUIZ -->
-  <section id="quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <section id="quiz" role="tabpanel" aria-labelledby="tab-quiz" hidden>
     <div class="card" id="quizCard"></div>
     <p class="note">Je antwoorden worden niet opgeslagen. Er is geen inlog nodig.</p>
   </section>
 
-  <!-- ZAKKAART -->
+  <!-- ZAKKAART / BESLISBOOM -->
   <section id="zakkaart" role="tabpanel" aria-labelledby="tab-zakkaart" hidden>
     <div class="card">
-      <span class="concept">Concept – nog af te stemmen</span>
-      <h2>Zakkaart: kan deze patiënt thuis verder?</h2>
-      <p class="note" style="margin-top:0">Het stappenplan in het kort, van signaal op de afdeling tot zorg thuis.</p>
-      <ol class="stappen">
-        <li class="stap"><span class="nr">1</span>
-          <span class="wie">Verpleegkundige</span>
-          <h3>Signaleer</h3>
-          <p>Krijgt de patiënt een technische handeling die op de lijst van je afdeling staat? Let hier vooral op:</p>
-          <ul><li>bij de start van zo'n handeling;</li><li>uiterlijk bij het bepalen van de ontslagdatum (± 2 dagen vooraf).</li></ul>
-          <div class="tip noprint">Twijfel je of een handeling op de lijst staat? <a href="#handelingen" data-naar="handelingen">Bekijk de handelingen van je afdeling</a>.</div>
-        </li>
-        <li class="stap"><span class="nr">2</span>
-          <span class="wie">Verpleegkundige en arts</span>
-          <h3>Bespreek met de arts</h3>
-          <p>Onderbouw kort:</p>
-          <ul><li>om welke handeling het gaat;</li><li>dat de thuiszorg deze handeling kan uitvoeren;</li><li>dat de patiënt aan de voorwaarden voldoet;</li><li>het voorstel: consult bij het transferpunt.</li></ul>
-          <p class="vertak">Akkoord van de arts? Ga naar stap 3.</p>
-        </li>
-        <li class="stap"><span class="nr">3</span>
-          <span class="wie">Afdeling</span>
-          <h3>Maak een consult aan in EPIC</h3>
-          <p>Bij het vastleggen van de ontslagdatum maak je een consult aan bij het transferpunt.</p>
-          <p class="vertak">Geen thuiszorg nodig? Dan volgt een gewoon ontslag.</p>
-        </li>
-        <li class="stap"><span class="nr">4</span>
-          <span class="wie">Transferpunt</span>
-          <h3>Transferpunt beoordeelt en regelt</h3>
-          <p>Het transferpunt beoordeelt het consult, kijkt of de thuissituatie in orde is en zoekt contact met de thuiszorg.</p>
-          <p class="vertak">Is de thuissituatie niet geschikt? Dan zoekt het transferpunt samen met jou een andere ontslagbestemming.</p>
-        </li>
-        <li class="stap"><span class="nr">5</span>
-          <span class="wie">Thuiszorg</span>
-          <h3>Thuiszorg accepteert, patiënt gaat naar huis</h3>
-          <p>De thuiszorg, bijvoorbeeld Thuiszorg Het Friese Land, accepteert de aanvraag en neemt de handeling thuis over. De patiënt herstelt in de eigen omgeving.</p>
-        </li>
-      </ol>
+      <span class="concept">Zakkaart versie 3 · concept</span>
+      <h2>Kan deze patiënt naar huis met technische thuiszorg?</h2>
+      <p class="note" style="margin-top:0">Afdeling U en Z · werk terug vanaf de ontslagdatum. Het model geeft een signaal; de hoofdbehandelaar beslist.</p>
+      <div class="schakel noprint" role="group" aria-label="Weergave">
+        <button class="actief" id="kn-doorloop">Stap voor stap</button><button id="kn-boom">Hele boom</button>
+      </div>
+      <!-- stap voor stap -->
+      <div id="doorloop" class="noprint"></div>
+      <!-- hele boom -->
+      <div id="boom" hidden>
+        <div class="b-opt">Optioneel, bij intake: voorlopige ontslagdatum noteren</div>
+        <div class="b-pijl"></div>
+        <div class="b-rij"><div class="b-vraag"><span class="r">R2</span>Ontslag over 2 dagen en nog een ZVZ-handeling?</div><div class="b-nee"><i>nee</i>Dagelijks opnieuw kijken</div></div>
+        <div class="b-ja">ja</div>
+        <div class="b-rij"><div class="b-vraag"><span class="r">R5</span>Stabiel? Geen koorts of delier</div><div class="b-nee"><i>nee</i>Volgende dienst opnieuw kijken</div></div>
+        <div class="b-ja">ja</div>
+        <div class="b-rij"><div class="b-stap"><span class="r">R6</span>Thuissituatie controleren</div><div class="b-leeg"></div></div>
+        <div class="b-pijl"></div>
+        <div class="b-rij"><div class="b-vraag"><span class="r">R7</span>Akkoord arts voor ZVZ?</div><div class="b-nee"><i>nee</i>Blijft opgenomen, later opnieuw</div></div>
+        <div class="b-ja">ja</div>
+        <div class="b-rij"><div class="b-stap b-actie"><span class="r">R8</span><b>Consult transferpunt</b><br>meteen, uiterlijk 48 uur vooraf</div><div class="b-leeg"></div></div>
+        <div class="b-pijl"></div>
+        <div class="b-rij"><div class="b-stap">Zorg thuis door THFL</div><div class="b-leeg"></div></div>
+        <div class="b-vangnet"><b>Vangnet (R3):</b> al 24 uur alleen ZVZ-handelingen en nog geen ontslagdatum? Ga door naar "Stabiel?".</div>
+      </div>
       <div class="tip"><b>Vragen of twijfel?</b> Stel ze gerust aan je teamleider.</div>
-      <div class="noprint"><button class="btn licht" onclick="window.print()">Zakkaart afdrukken</button></div>
+      <div class="noprint"><button class="btn licht" onclick="toonBoomVoorPrint()">Zakkaart afdrukken</button></div>
+    </div>
+
+    <div class="card">
+      <h2>Veelvoorkomende handelingen</h2>
+      <ul class="tips">
+        <li>Antibiotica via infuus (OPAT)</li><li>Vocht en elektrolyten via infuus</li><li>Pijnmedicatie via een pomp</li><li>Port-a-cath doorspuiten en locken</li><li>PICC-lijn verzorgen</li><li>Chemopomp (elastomeer) afkoppelen</li><li>Parenterale voeding (TPV)</li>
+      </ul>
+      <p class="note">Voorlopig: de definitieve lijst volgt na toetsing door THFL. <a href="#handelingen" data-naar="handelingen">Bekijk alle handelingen per afdeling</a>.</p>
+    </div>
+
+    <div class="card">
+      <span class="concept">Concept</span>
+      <h2>De beslisregels achter de kaart</h2>
+      <p class="note" style="margin-top:0">De zakkaart, deze website en later EPIC volgen dezelfde regels. De nummers R1–R8 staan ook in de beslisboom.</p>
+      <div id="regels"></div>
+      <p class="note"><b>Rollen:</b> de verpleegkundige signaleert (R2 t/m R6), de arts beslist (R7) en het transferpunt regelt (R8).</p>
     </div>
   </section>
 
@@ -322,10 +393,60 @@ zoek.addEventListener('keydown', e => {
 });
 toonLijst('');
 
+// ======================= BESLISBOOM (zakkaart versie 3) =======================
+// Bron: "Stappenplan beslismodel ZVZ: van data naar beslisregel" (stand 24-11-2026), zakkaart versie 3 en beslisregels R1–R8.
+const BOOM = {
+  q1: { r: 'R1 · R2', v: 'Is het ontslag over 2 dagen (of eerder), en krijgt de patiënt nog een ZVZ-handeling?', u: 'Een ZVZ-handeling is een handeling van de lijst voor afdeling U en Z.', ja: 'q2', nee: 'q1b' },
+  q1b: { r: 'R3 · vangnet', v: 'Krijgt de patiënt al 24 uur alleen nog ZVZ-handelingen, en is er nog geen ontslagdatum?', ja: 'q2', nee: 'u_dag' },
+  q2: { r: 'R5', v: 'Is de patiënt stabiel?', l: ['Geen koorts', 'Niet verward of delirant', 'Geen verder onderzoek of diagnostiek nodig'], ja: 'q3', nee: 'u_dienst' },
+  q3: { r: 'R6', v: 'Klopt de thuissituatie?', l: ['De patiënt wil naar huis met thuiszorg', 'Er is een mantelzorger of een veilige thuissituatie', 'De patiënt woont in het werkgebied van THFL of een andere thuiszorgorganisatie'], ja: 'q4', nee: 'u_twijfel', neeLabel: 'Nee of twijfel' },
+  q4: { r: 'R7', v: 'Gaat de hoofdbehandelaar akkoord met ZVZ?', u: 'Bespreek het bij de visite: welke handeling, dat de thuiszorg dit kan uitvoeren en dat de patiënt stabiel is. De arts beslist.', ja: 'u_consult', nee: 'u_blijft' },
+  u_dag: { uit: 'neutraal', t: 'Nog geen ZVZ', d: 'Kijk dagelijks opnieuw.' },
+  u_dienst: { uit: 'neutraal', t: 'Nu geen ZVZ', d: 'Kijk de volgende dienst opnieuw.' },
+  u_twijfel: { uit: 'neutraal', t: 'Bespreek het met de hoofdbehandelaar', d: 'Is de thuissituatie niet in orde of onduidelijk? Overleg dan eerst met de hoofdbehandelaar.' },
+  u_blijft: { uit: 'neutraal', t: 'De patiënt blijft opgenomen', d: 'Beoordeel later opnieuw.' },
+  u_consult: { uit: 'go', r: 'R8', t: 'Maak meteen het consult aan bij het transferpunt', d: 'In EPIC, uiterlijk 48 uur voor ontslag. Nooit pas op de ontslagdag. Ook ADL-zorg nodig? Zet dit in het consult. Daarna regelt het transferpunt de thuiszorg, en de thuiszorg neemt de zorg thuis over.' },
+};
+let pad = ['q1'], antw = [];
+const dl = document.getElementById('doorloop');
+function toonDoorloop() {
+  const id = pad[pad.length - 1], n = BOOM[id];
+  let h = '<ol class="spoor">' + antw.map((a, i) => `<li><span>${esc(BOOM[pad[i]].v)}</span><b class="${a === 'ja' ? 'a-ja' : 'a-nee'}">${a === 'ja' ? 'ja' : (BOOM[pad[i]].neeLabel || 'nee').toLowerCase()}</b></li>`).join('') + '</ol>';
+  if (n.uit) {
+    h += `<div class="uitkomst ${n.uit === 'go' ? 'u-go' : ''}">${n.r ? `<span class="r">${n.r}</span>` : ''}<h3>${esc(n.t)}</h3><p>${esc(n.d)}</p></div>`;
+  } else {
+    h += `<div class="vraagkaart"><span class="r">${n.r}</span><h3>${esc(n.v)}</h3>${n.l ? '<ul>' + n.l.map(x => `<li>${esc(x)}</li>`).join('') + '</ul>' : ''}${n.u ? `<p class="note">${esc(n.u)}</p>` : ''}
+      <div class="jn"><button class="btn" data-a="ja">Ja</button><button class="btn licht" data-a="nee">${esc(n.neeLabel || 'Nee')}</button></div></div>`;
+  }
+  h += `<div class="nav2">${antw.length ? '<button class="wissel" id="bt-terug">← Vorige vraag</button>' : ''}${antw.length ? '<button class="wissel" id="bt-opnieuw">Opnieuw beginnen</button>' : ''}</div>`;
+  dl.innerHTML = h;
+  dl.querySelectorAll('[data-a]').forEach(b => b.onclick = () => { antw.push(b.dataset.a); pad.push(n[b.dataset.a]); toonDoorloop(); });
+  const t = document.getElementById('bt-terug'); if (t) t.onclick = () => { antw.pop(); pad.pop(); toonDoorloop(); };
+  const o = document.getElementById('bt-opnieuw'); if (o) o.onclick = () => { pad = ['q1']; antw = []; toonDoorloop(); };
+}
+toonDoorloop();
+const knD = document.getElementById('kn-doorloop'), knB = document.getElementById('kn-boom');
+function weergave(boom) { document.getElementById('boom').hidden = !boom; dl.hidden = boom; knB.classList.toggle('actief', boom); knD.classList.toggle('actief', !boom); }
+knD.onclick = () => weergave(false); knB.onclick = () => weergave(true);
+function toonBoomVoorPrint() { const was = !document.getElementById('boom').hidden; weergave(true); setTimeout(() => { window.print(); if (!was) weergave(false); }, 50); }
+
+const REGELS = [
+  ['R1', 'Handeling', 'De patiënt krijgt een handeling van de lijst voor U en Z, getoetst door THFL', 'De handeling kan thuis door THFL', 'Lijst voorlopig; toets door THFL volgt'],
+  ['R2', 'Signaalmoment', 'Voorlopige ontslagdatum over 2 dagen of minder, en R1 geldt', 'Signaal: beoordelen voor ZVZ', 'Concept'],
+  ['R3', 'Vangnet', 'Al 24 uur alleen handelingen van de lijst, en nog geen ontslagdatum', 'Signaal: beoordelen voor ZVZ', 'Concept'],
+  ['R4', 'Intake (optie)', 'Bij opname', 'Voorlopige ontslagdatum en thuissituatie noteren', 'Optie, los te koppelen'],
+  ['R5', 'Stabiliteit', 'Koorts, verwardheid of delier, of verder onderzoek nodig', 'Nu geen ZVZ; volgende dienst opnieuw kijken', 'Concept'],
+  ['R6', 'Thuissituatie', 'De patiënt wil naar huis en thuis is veilig', 'Door naar de arts; ADL-zorg nodig? Melden in het consult', 'Concept'],
+  ['R7', 'Arts', 'R1, R5 en R6 voldaan', 'De verpleegkundige bespreekt bij de visite: welke handeling, thuiszorg kan dit, patiënt stabiel. De arts beslist', 'Concept'],
+  ['R8', 'Actie', 'Akkoord van de arts', 'Consult transferpunt meteen, uiterlijk 48 uur voor ontslag; nooit op de ontslagdag', 'Concept'],
+];
+document.getElementById('regels').innerHTML = REGELS.map(([nr, naam, als, dan, st]) =>
+  `<div class="regel"><div class="rk"><span class="r">${nr}</span><b>${esc(naam)}</b><small>${esc(st)}</small></div><div class="ra"><span>Als</span>${esc(als)}</div><div class="ra"><span>Dan</span>${esc(dan)}</div></div>`).join('');
+
 // ======================= TABBLADEN =======================
-const TABS = ['video', 'quiz', 'zakkaart', 'handelingen'];
+const TABS = ['start', 'zakkaart', 'handelingen', 'video', 'quiz'];
 function open(id, push = true) {
-  if (!TABS.includes(id)) id = 'quiz';
+  if (!TABS.includes(id)) id = 'start';
   for (const t of TABS) { document.getElementById('tab-' + t).setAttribute('aria-selected', t === id); document.getElementById(t).hidden = t !== id; }
   if (id !== 'video') { const v = document.querySelector('video'); if (v) v.pause(); }
   if (push) history.replaceState(null, '', '#' + id);
@@ -333,7 +454,7 @@ function open(id, push = true) {
 }
 TABS.forEach(t => document.getElementById('tab-' + t).addEventListener('click', () => open(t)));
 document.addEventListener('click', e => { const el = e.target.closest('[data-naar]'); if (el) { e.preventDefault(); open(el.dataset.naar); } });
-open((location.hash || '#quiz').slice(1), false);
+open((location.hash || '#start').slice(1), false);
 </script>
 </body>
 </html>
